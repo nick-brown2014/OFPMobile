@@ -1,0 +1,15 @@
+<Page loaded="loaded">
+	<StackLayout orientation="vertical">
+		<GridLayout rows="auto, auto" columns="*, auto, *">
+			<Image id="header" src="res://ofp-header" row="0" colspan="4" stretch="aspectFill" horizontalAlignment="center"/>
+			<Image id="logo" src="res://ofp-logo" row="1" col="1" stretch="none" horizontalAlignment="center"/>
+		</GridLayout>
+
+		<TextField id="email" text="{{ email }}" hint="Email Address" keyboardType="email" autocorrect="false" autocapitalizationType="none"/>
+		<TextField id="pass" text="{{ password }}" hint="Password" secure="true"/>
+
+		<Button id="signIn" text="Sign In" tap="signIn"/>
+		<Button id="signUp" text="Sign Up" tap="signUp"/>
+
+	</StackLayout>
+</Page>

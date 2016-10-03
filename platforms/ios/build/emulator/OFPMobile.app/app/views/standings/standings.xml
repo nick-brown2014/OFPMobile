@@ -1,0 +1,20 @@
+<Page loaded="loaded">
+	<GridLayout rows="auto, auto, auto, *" columns="*, 8*, *">
+		<Label class="header" text="" row="0" colSpan="3" />
+		<Label class="pageHead" text="Standings" row="1" colSpan="3" horizontalAlignment="center"/>
+		<GridLayout id="tableHead" row="2" col="1" rows="auto" columns="auto, *, *">
+			<Label class="category" text="No: " col="0" horizontalAlignment="left"/>
+			<Label class="category" text="Username" col="1" horizontalAlignment="left"/>
+			<Label class="category" text="W - L - T" col="2" horizontalAlignment="right"/>
+		</GridLayout>
+		<ListView items="{{ standingsList }}" id="standingsList" row="3" col="1">
+			<ListView.itemTemplate>
+				<GridLayout rows="auto" columns="auto, auto, *">
+					<Label class="data" text="{{ place }}" col="0" horizontalAlignment="left" />
+					<Label class="data" text="{{ username }}" col="1" horizontalAlignment="left" />
+					<Label class="data" text="{{ joinedRecord }}" row="0" col="2" horizontalAlignment="right"/>
+				</GridLayout>
+			</ListView.itemTemplate>
+		</ListView>
+	</GridLayout>
+</Page>
