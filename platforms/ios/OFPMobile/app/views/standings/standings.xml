@@ -1,7 +1,13 @@
 <Page loaded="loaded">
 	<GridLayout rows="auto, auto, auto, *" columns="*, 8*, *">
+<!-- 		<ListView items="{{ poolsList }}" class="header" row="0" col="1">
+			<ListView.itemTemplate>
+				<Label text="{{ name }}"/>
+			</ListView.itemTemplate>
+		</ListView> -->
 		<!-- <ListPicker class="header" items="{{ pools }}" selectedIndex="0" row="0" col="1"/>  -->
 		<Label class="header" text="" row="0" colSpan="3"/>
+		<Button class="poolsButton" text="POOLS: MY POOL(123123)" row="0" col="1" horizontalAlignment="center"/>
 		<Label class="pageHead" text="Standings" row="1" colSpan="3" horizontalAlignment="center"/>
 		<GridLayout id="tableHead" row="2" col="1" rows="auto" columns="auto, *, *">
 			<Label class="category" text="No: " col="0" horizontalAlignment="left"/>
@@ -11,7 +17,7 @@
 		<ListView items="{{ standingsList }}" id="standingsList" row="3" col="1">
 			<ListView.itemTemplate>
 				<GridLayout rows="auto" columns="auto, auto, *">
-					<Label class="data" text="{{ place }}" col="0" horizontalAlignment="left"/>
+					<Label class="data" text="{{place }}" col="0" horizontalAlignment="left"/>
 					<Label class="data" text="{{ username }}" col="1" horizontalAlignment="left"/>
 					<Label class="data" text="{{ joinedRecord }}" row="0" col="2" horizontalAlignment="right"/>
 				</GridLayout>

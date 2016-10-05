@@ -7,14 +7,41 @@ function PoolsListViewModel(items) {
 
 	viewModel.load = function() {
 		var url = config.apiURI + "PoolList.cfm";
-		console.log(url);
 		return fetch(url)
 		.then(handleErrors)
 		.then(function(data) {
 			var parsedData = JSON.parse(data._bodyInit);
-			console.dump(parsedData);
-		});
+			var pools = parsedData.pools;
+			pools.forEach(function(pool) {
+				viewModel.push({
+					name: pool.name,
+					id: pool.id,
+					typeId: pool.typeid
+				});
+			});
+			return viewModel._array;
+		})
+		.catch(function(error) {
+			console.log("ERROR: " + error);
+		})
 	};
+
+	viewModel.empty = function() {
+	    while (viewModel.length) {
+	        viewModel.pop();
+	    }
+	};
+
+	// viewModel.makeNamesList = function() {
+	// 	var namesList = [];
+		// pools.forEach(function(pool) {
+		// 	// namesList.push(pool.name);
+		// 	// console.log(pool.name);
+		// 	// console.log(namesList);
+		// });
+		// console.dump(namesList);
+		// return namesList;
+	// };
 
 	return viewModel;
 
