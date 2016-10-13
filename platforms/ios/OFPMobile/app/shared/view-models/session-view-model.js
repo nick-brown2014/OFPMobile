@@ -26,14 +26,24 @@ function Session(info) {
 			parsedContent.poolname = poolName;
 			file.remove();
 			file.writeText(JSON.stringify(parsedContent));
-			console.dump(parsedContent);
 		});
 		var url = config.apiURI + "session.cfm";
-		console.log(url);
-		return fetch(url)
+		var fd = new FormData();
+        fd.append("poolid", poolId);
+		return fetch(url, {
+			method: "POST",
+			mode: "cors",
+			body: fd,
+			// body: JSON.stringify({
+			// 	poolid: poolId
+			// }),
+			headers: {
+				"Content-Type": "text/html"
+			}
+		})
 		.then(handleErrors)
 		.then(function(data) {
-			parsedData = JSON.parse(data._bodyInit);
+			var parsedData = JSON.parse(data._bodyInit);
 			console.dump(parsedData);
 		})
 		.catch(function(error) {

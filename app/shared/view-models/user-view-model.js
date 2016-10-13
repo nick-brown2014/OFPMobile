@@ -10,18 +10,20 @@ function User(info) {
 	});
 
 	viewModel.login = function() {
-		// var fd = new FormData();
-        // fd.append("username", viewModel.get("email"));
-        // fd.append("password", viewModel.get("password"));
+		var fd = new FormData();
+        fd.append("username", viewModel.get("email"));
+        fd.append("password", viewModel.get("password"));
         var url = config.apiURI + "login.cfm";
 		return fetch(url, {
 			method: 'POST',
-			body: JSON.stringify({
-				username: viewModel.get("email"),
-				password: viewModel.get("password")
-			}),
+			mode: "cors",
+			body: fd,
+			// body: JSON.stringify({
+			// 	username: viewModel.get("email"),
+			// 	password: viewModel.get("password")
+			// }),
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "text/html"
 			}
 		})
 		.then(handleErrors)
