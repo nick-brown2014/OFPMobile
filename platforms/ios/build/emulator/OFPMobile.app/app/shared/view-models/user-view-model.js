@@ -20,13 +20,8 @@ function User(info) {
 			body: fd
 		})
 		.then(handleErrors)
-		.then(function(response) {
-	    	return response.json();
-		})
-		// .then(function(data) {
-		// })
 		.catch(function(error) {
-			console.log("ERROR: " + error);
+			console.log(error);
 		});
 	};
 

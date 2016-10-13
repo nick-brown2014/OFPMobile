@@ -20,6 +20,7 @@ function StandingsListViewModel(items) {
 				});
 			});
 			viewModel.prepareStandings();
+
 		})
 		.catch(function(error) {
 			console.log("ERROR: " + error);
@@ -33,6 +34,9 @@ function StandingsListViewModel(items) {
 			var joinedRecord = ""
 			entry.place = entry.place + ": ";
 			entry.record.forEach(function(standing) {
+				if (standing.slice(-2) === ".0") {
+					standing = standing.slice(0, -2);
+				};
 				joinedRecord = joinedRecord + standing + " - ";
 			});
 			joinedRecord = joinedRecord.slice(0, -3);

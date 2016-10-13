@@ -6,23 +6,21 @@ function StandingsListViewModel(items) {
 	var viewModel = new ObservableArray(items);
 
 	viewModel.load = function() {
-		var url = config.apiURI + "getStandings.cfm?weekid=397";
+		var url = config.apiURI + "getStandings.cfm?weekid=398";
 		return fetch(url)
 		.then(handleErrors)
 		.then(function(data) {
 			var parsedData = JSON.parse(data._bodyInit);
 			var users = parsedData.users;
-			// console.dump(users);
-			users.forEach(function(standing) {
+			users.forEach(function(user) {
 				viewModel.push({
-					place: standing.place,
-					username: standing.username,
-					record: standing.record
+					place: user.place,
+					username: user.username,
+					record: user.record
 				});
 			});
-			// console.dump(users);
-			// viewModel.checkArray();
 			viewModel.prepareStandings();
+
 		})
 		.catch(function(error) {
 			console.log("ERROR: " + error);
@@ -36,12 +34,15 @@ function StandingsListViewModel(items) {
 			var joinedRecord = ""
 			entry.place = entry.place + ": ";
 			entry.record.forEach(function(standing) {
+				if (standing.slice(-2) === ".0") {
+					standing = standing.slice(0, -2);
+				};
 				joinedRecord = joinedRecord + standing + " - ";
 			});
 			joinedRecord = joinedRecord.slice(0, -3);
 			array[index].joinedRecord = joinedRecord;
 		});
-	}
+	};
 
 	viewModel.empty = function() {
 	    while (viewModel.length) {

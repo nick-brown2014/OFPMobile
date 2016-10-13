@@ -1,0 +1,14 @@
+<Page loaded="loaded">
+	<GridLayout rows="auto, auto, *" columns="*, 8*, *">
+		<Label class="header" text="" row="0" colSpan="3"/>
+		<Button class="poolsButton" text="AWESOME POOL (123123)" row="0" col="1" horizontalAlignment="center"/>
+		<Label class="pageHead" text="My Pools" row="1" colSpan="3" horizontalAlignment="center"/>
+		<StackLayout orientation="vertical" row="2" col="1">
+			<ListView items="{{ poolsList }}" id="poolsList">
+				<ListView.itemTemplate>
+					<Button class="pool-name" text="{{ name }}" tap="selectPool"/>
+				</ListView.itemTemplate>
+			</ListView>
+		</StackLayout>
+	</GridLayout>
+</Page>

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "email-validator": "^1.0.7",
+    "nativescript-drop-down-menu": "file:../nativescript-drop-down-menu",
     "tns-core-modules": "^2.3.0"
   }
 }

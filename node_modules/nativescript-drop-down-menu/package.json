@@ -1,0 +1,17 @@
+{
+  "name": "nativescript-drop-down-menu",
+  "version": "1.0.0",
+  "description": "This package installs a drop down menu for iOS",
+  "main": "landings.js",
+  "nativescript": {
+    "platforms": {
+      "ios": "1.3.0"
+    }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "nativescript-drop-down-menu@1.0.0",
+  "scripts": {},
+  "_shasum": "ecffd23b18bd53a69b9e38dea1978e7cc0afba17",
+  "_from": "../nativescript-drop-down-menu",
+  "_resolved": "file:../nativescript-drop-down-menu"
+}

@@ -1,0 +1,8 @@
+use_frameworks!
+
+target "OFPMobile" do
+# Begin Podfile - /Users/nickbrown/Desktop/OFPMobile/node_modules/nativescript-drop-down-menu/platforms/ios/Podfile 
+ pod "DropdownMenu" 
+ # End Podfile 
+
+end

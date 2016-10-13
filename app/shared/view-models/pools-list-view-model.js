@@ -6,24 +6,23 @@ function PoolsListViewModel(items) {
 	var viewModel = new ObservableArray(items);
 
 	viewModel.load = function() {
-		var url = config.apiURI + "PoolList.cfm";
+		var url = config.apiURI + "session.cfm";
 		return fetch(url)
 		.then(handleErrors)
 		.then(function(data) {
 			var parsedData = JSON.parse(data._bodyInit);
-			var pools = parsedData.pools;
+			var pools = parsedData.poolsArray;
 			pools.forEach(function(pool) {
+				console.log(pool.poolname + " " + pool.poolid);
 				viewModel.push({
-					name: pool.name,
-					id: pool.id,
-					typeId: pool.typeid
+					name: pool.poolname,
+					id: pool.poolid
 				});
 			});
-			return viewModel._array;
 		})
 		.catch(function(error) {
 			console.log("ERROR: " + error);
-		})
+		});
 	};
 
 	viewModel.empty = function() {
@@ -31,17 +30,6 @@ function PoolsListViewModel(items) {
 	        viewModel.pop();
 	    }
 	};
-
-	// viewModel.makeNamesList = function() {
-	// 	var namesList = [];
-		// pools.forEach(function(pool) {
-		// 	// namesList.push(pool.name);
-		// 	// console.log(pool.name);
-		// 	// console.log(namesList);
-		// });
-		// console.dump(namesList);
-		// return namesList;
-	// };
 
 	return viewModel;
 
