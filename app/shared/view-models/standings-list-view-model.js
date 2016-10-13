@@ -50,10 +50,6 @@ function StandingsListViewModel(items) {
 	    }
 	};
 
-	viewModel.checkArray = function() {
-		console.dump(viewModel._array);
-	};
-
 	return viewModel;
 
 }

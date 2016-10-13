@@ -16,13 +16,13 @@ exports.loaded = function(args) {
 	page = args.object;
 	page.bindingContext = pageData;
 
+	sessionsViewModel.getCurrentPool();	
+
 	button = page.getViewById("poolsButton");
 	button.bindingContext = sessionsViewModel;
 
 	poolsList.empty();
 	poolsList.load();
-
-	sessionsViewModel.getCurrentPool();
 
 }
 

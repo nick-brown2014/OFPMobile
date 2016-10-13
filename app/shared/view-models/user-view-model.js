@@ -18,10 +18,6 @@ function User(info) {
 			method: 'POST',
 			mode: "cors",
 			body: fd,
-			// body: JSON.stringify({
-			// 	username: viewModel.get("email"),
-			// 	password: viewModel.get("password")
-			// }),
 			headers: {
 				"Content-Type": "text/html"
 			}

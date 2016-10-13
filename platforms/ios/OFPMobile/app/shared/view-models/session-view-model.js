@@ -1,32 +1,21 @@
 var config = require("../../shared/config");
 var fetchModule = require("fetch");
 var Observable = require("data/observable").Observable;
-var fileSystemModule = require("file-system");
-var fileName = 'sessionData.json';
-var file = fileSystemModule.knownFolders.documents().getFile(fileName);
+var applicationSettings = require("application-settings");
 
 
 function Session(info) {
 	info = info || {};
 
-	var viewModel = new Observable({
-		hasSession: info.hasSession || false,
-		poolName: info.poolName || ""
-	});
+	var viewModel = new Observable();
 
 	viewModel.clearSession = function() {
-		file.remove();
+		applicationSettings.clear();
 	}
 
 	viewModel.setSession = function(poolId, poolName) {
-		file.readText()
-		.then(function(content) {
-			parsedContent = JSON.parse(content);
-			parsedContent.poolid = poolId;
-			parsedContent.poolname = poolName;
-			file.remove();
-			file.writeText(JSON.stringify(parsedContent));
-		});
+		applicationSettings.setString("poolId", String(poolId));
+		applicationSettings.setString("poolName", poolName);		
 		var url = config.apiURI + "session.cfm";
 		var fd = new FormData();
         fd.append("poolid", poolId);
@@ -34,9 +23,6 @@ function Session(info) {
 			method: "POST",
 			mode: "cors",
 			body: fd,
-			// body: JSON.stringify({
-			// 	poolid: poolId
-			// }),
 			headers: {
 				"Content-Type": "text/html"
 			}
@@ -52,11 +38,7 @@ function Session(info) {
 	}
 
 	viewModel.getCurrentPool = function() {
-		file.readText()
-		.then(function(content) {
-			var parsedContent = JSON.parse(content);
-			viewModel.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
-		});
+		applicationSettings.getString("poolName");
 	}
 
 	viewModel.fetchSession = function() {
@@ -71,9 +53,13 @@ function Session(info) {
 					currentPoolName = pool.poolname;
 				};
 			});
-			var sessionString = JSON.stringify({"memberid": sessionData.memberid, "poolid": sessionData.poolid, "poolname": currentPoolName});
-			console.log(sessionString);
-			file.writeText(sessionString);
+			console.log(sessionData.memberid);
+			console.log(currentPoolName);			
+			applicationSettings.setString("poolId", sessionData.poolid);
+			applicationSettings.setString("memberId", sessionData.memberid);			
+			applicationSettings.setString("poolName", currentPoolName);
+			var nameyName = applicationSettings.getString("poolName");
+			console.log ("nameyName = " + nameyName);
 		});
 	}
 
