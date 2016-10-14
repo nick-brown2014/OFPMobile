@@ -29,9 +29,6 @@ exports.loaded = function(args) {
 exports.selectPool = function(event) {
 	var poolView = event.object;
 	var pool = poolView.bindingContext;
-	var navigationOptions = {
-		moduleName: "views/standings/standings",
-		context: {param1: pool.id, param2: pool.name}
-	}
-	frameModule.topmost().navigate(navigationOptions);
+	sessionsViewModel.setSession(pool.id, pool.name);
+	frameModule.topmost().navigate("views/standings/standings");
 }

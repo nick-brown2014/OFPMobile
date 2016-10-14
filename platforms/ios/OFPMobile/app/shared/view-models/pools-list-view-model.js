@@ -13,7 +13,6 @@ function PoolsListViewModel(items) {
 			var parsedData = JSON.parse(data._bodyInit);
 			var pools = parsedData.poolsArray;
 			pools.forEach(function(pool) {
-				console.log(pool.poolname + " " + pool.poolid);
 				viewModel.push({
 					name: pool.poolname,
 					id: pool.poolid

@@ -46,8 +46,6 @@ function Session(info) {
 		file.readText()
 		.then(function(content) {
 			var parsedContent = JSON.parse(content);
-			// console.log("Get Current Pool");			
-			// console.dump(parsedContent);
 			viewModel.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
 		});
 	}

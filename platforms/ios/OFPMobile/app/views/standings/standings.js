@@ -10,7 +10,7 @@ var page;
 var button;
 
 var standingsList = new StandingsListViewModel([]);
-var poolNameString = {poolName: ""};
+var sessionsViewModel = new SessionsViewModel();
 // Retrieves data from session.cfm indluding current poolId, poolName, and memberId
 // Also checks local storage to retreive the poolName string, which includes current pool id and name combined and formatted
 
@@ -22,20 +22,9 @@ exports.loaded = function(args) {
 	page = args.object;
 	page.bindingContext = pageData;
 	button = page.getViewById("poolsButton");
-	button.bindingContext = poolNameString;
+	button.bindingContext = sessionsViewModel;
 
-	if (page.navigationContext){
-		var gotData = page.navigationContext;		
-		poolNameString.poolName = gotData.param1 + " (" + gotData.param2 + ")";
-	} else {
-		file.readText()
-		.then(function(content) {
-			console.dump(content);
-			var parsedContent = JSON.parse(content);
-			poolNameString.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
-			console.log(poolNameString.poolName);
-		});
-	}
+	sessionsViewModel.getCurrentPool();
 
 	standingsList.empty();
 	standingsList.load();
