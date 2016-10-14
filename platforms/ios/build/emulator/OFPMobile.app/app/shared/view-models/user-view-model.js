@@ -1,5 +1,4 @@
 var config = require("../../shared/config");
-var fetchModule = require("fetch");
 var Observable = require("data/observable").Observable;
 
 function User(info) {
@@ -15,9 +14,17 @@ function User(info) {
         fd.append("username", viewModel.get("email"));
         fd.append("password", viewModel.get("password"));
         var url = config.apiURI + "login.cfm";
-		return fetchModule.fetch(url, {
+		return fetch(url, {
 			method: 'POST',
-			body: fd
+			mode: "cors",
+			body: fd,
+			// body: JSON.stringify({
+			// 	username: viewModel.get("email"),
+			// 	password: viewModel.get("password")
+			// }),
+			headers: {
+				"Content-Type": "text/html"
+			}
 		})
 		.then(handleErrors)
 		.catch(function(error) {

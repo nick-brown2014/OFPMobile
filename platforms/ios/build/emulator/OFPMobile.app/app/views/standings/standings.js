@@ -6,23 +6,28 @@ var SessionsViewModel = require("../../shared/view-models/session-view-model");
 var fileSystemModule = require("file-system");
 var fileName = 'sessionData.json';
 var file = fileSystemModule.knownFolders.documents().getFile(fileName);
+var page;
+var button;
 
 var standingsList = new StandingsListViewModel([]);
 var sessionsViewModel = new SessionsViewModel();
 
 var pageData = new Observable({
-	standingsList: standingsList,
-	sessionsViewModel: sessionsViewModel
+	standingsList: standingsList
 });
 
 exports.loaded = function(args) {
 	page = args.object;
 	page.bindingContext = pageData;
 
+	sessionsViewModel.getCurrentPool();	
+
+	button = page.getViewById("poolsButton");
+	button.bindingContext = sessionsViewModel;
+
 	standingsList.empty();
 	standingsList.load();
 
-	sessionsViewModel.getCurrentPool();
 };
 
 exports.goToPoolsList = function() {

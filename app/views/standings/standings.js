@@ -10,7 +10,9 @@ var page;
 var button;
 
 var standingsList = new StandingsListViewModel([]);
-var sessionsViewModel = new SessionsViewModel();
+var poolNameString = {poolName: ""};
+// Retrieves data from session.cfm indluding current poolId, poolName, and memberId
+// Also checks local storage to retreive the poolName string, which includes current pool id and name combined and formatted
 
 var pageData = new Observable({
 	standingsList: standingsList
@@ -19,11 +21,21 @@ var pageData = new Observable({
 exports.loaded = function(args) {
 	page = args.object;
 	page.bindingContext = pageData;
-
-	sessionsViewModel.getCurrentPool();	
-
 	button = page.getViewById("poolsButton");
-	button.bindingContext = sessionsViewModel;
+	button.bindingContext = poolNameString;
+
+	if (page.navigationContext){
+		var gotData = page.navigationContext;		
+		poolNameString.poolName = gotData.param1 + " (" + gotData.param2 + ")";
+	} else {
+		file.readText()
+		.then(function(content) {
+			console.dump(content);
+			var parsedContent = JSON.parse(content);
+			poolNameString.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
+			console.log(poolNameString.poolName);
+		});
+	}
 
 	standingsList.empty();
 	standingsList.load();

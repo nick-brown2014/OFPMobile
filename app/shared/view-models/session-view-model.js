@@ -24,27 +24,18 @@ function Session(info) {
 			parsedContent = JSON.parse(content);
 			parsedContent.poolid = poolId;
 			parsedContent.poolname = poolName;
+			// console.log("Set Session");
+			// console.dump(parsedContent);
 			file.remove();
 			file.writeText(JSON.stringify(parsedContent));
 		});
-		var url = config.apiURI + "session.cfm";
-		var fd = new FormData();
-        fd.append("poolid", poolId);
+		var url = config.apiURI + "session.cfm?poolid=" + poolId;
 		return fetch(url, {
-			method: "POST",
-			mode: "cors",
-			body: fd,
-			// body: JSON.stringify({
-			// 	poolid: poolId
-			// }),
-			headers: {
-				"Content-Type": "text/html"
-			}
+			method: "GET"
 		})
 		.then(handleErrors)
 		.then(function(data) {
 			var parsedData = JSON.parse(data._bodyInit);
-			console.dump(parsedData);
 		})
 		.catch(function(error) {
 			console.log("ERROR: " + error);
@@ -55,6 +46,8 @@ function Session(info) {
 		file.readText()
 		.then(function(content) {
 			var parsedContent = JSON.parse(content);
+			// console.log("Get Current Pool");			
+			// console.dump(parsedContent);
 			viewModel.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
 		});
 	}
@@ -72,7 +65,6 @@ function Session(info) {
 				};
 			});
 			var sessionString = JSON.stringify({"memberid": sessionData.memberid, "poolid": sessionData.poolid, "poolname": currentPoolName});
-			console.log(sessionString);
 			file.writeText(sessionString);
 		});
 	}

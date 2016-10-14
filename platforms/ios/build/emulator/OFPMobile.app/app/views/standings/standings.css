@@ -3,11 +3,11 @@
 	margin-bottom: 5px;
 }
 
-.category, .standing, .poolsButton {
+.category, .standing, #poolsButton {
 	padding: 5px;
 }
 
-.poolsButton {
+#poolsButton {
 	margin-top: 10px;
 }
 

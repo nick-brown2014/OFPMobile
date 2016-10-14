@@ -2,7 +2,7 @@
 	<GridLayout rows="auto, auto, auto, *" columns="*, 8*, *">
 		<Label class="header" text="" row="0" colSpan="3"/>
 		<GridLayout row="0" colSpan="3" rows="auto" columns="*">
-			<Button class="poolsButton" tap="goToPoolsList" text="{{ sessionsViewModel.poolName }}}" row="0" col="0" horizontalAlignment="center"/>
+			<Button id="poolsButton" tap="goToPoolsList" text="{{ poolName }}" row="0" col="0" horizontalAlignment="center"/>
 		</GridLayout>
 		<Label class="pageHead" text="Standings" row="1" colSpan="3" horizontalAlignment="center"/>
 		<GridLayout id="tableHead" row="2" col="1" rows="auto" columns="40, 140, *">

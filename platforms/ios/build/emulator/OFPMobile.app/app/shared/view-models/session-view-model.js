@@ -26,17 +26,36 @@ function Session(info) {
 			parsedContent.poolname = poolName;
 			file.remove();
 			file.writeText(JSON.stringify(parsedContent));
-			console.dump(parsedContent);
+		});
+		var url = config.apiURI + "session.cfm";
+		var fd = new FormData();
+        fd.append("poolid", poolId);
+		return fetch(url, {
+			method: "POST",
+			mode: "cors",
+			body: fd,
+			// body: JSON.stringify({
+			// 	poolid: poolId
+			// }),
+			headers: {
+				"Content-Type": "text/html"
+			}
 		})
+		.then(handleErrors)
+		.then(function(data) {
+			var parsedData = JSON.parse(data._bodyInit);
+			console.dump(parsedData);
+		})
+		.catch(function(error) {
+			console.log("ERROR: " + error);
+		});
 	}
 
 	viewModel.getCurrentPool = function() {
-		console.log("hit");
 		file.readText()
 		.then(function(content) {
 			var parsedContent = JSON.parse(content);
 			viewModel.poolName = parsedContent.poolname.toUpperCase() + " (" + parsedContent.poolid + ")";
-			console.log(viewModel.poolName);
 		});
 	}
 
@@ -45,7 +64,15 @@ function Session(info) {
 		return fetch(url)
 		.then(function(response) {
 			var sessionData = JSON.parse(response._bodyInit);
-			var sessionString = JSON.stringify({"memberid": sessionData.memberid, "poolid": sessionData.poolid, "poolname": null});
+			var possiblePools = sessionData.poolsArray;
+			var currentPoolName = "";
+			possiblePools.forEach(function(pool) {
+				if (pool.poolid === sessionData.poolid) {
+					currentPoolName = pool.poolname;
+				};
+			});
+			var sessionString = JSON.stringify({"memberid": sessionData.memberid, "poolid": sessionData.poolid, "poolname": currentPoolName});
+			console.log(sessionString);
 			file.writeText(sessionString);
 		});
 	}

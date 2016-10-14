@@ -13,20 +13,15 @@ var user = new UserViewModel({
     email: "nick.brown2014",
     password: "gobengals"
 });
+
 var session = new SessionsViewModel();
 var pool = new PoolsListViewModel([]);
 
-var pageData = new Observable ({
-    user: user,
-    session: session,
-    pool: pool
-});
-
 exports.loaded = function(args) {
     page = args.object;
-    page.bindingContext = pageData;
+    page.bindingContext = user;
 
-    // session.clearSession();
+    session.clearSession();
     
     file.readText()
     .then(function(content) {
@@ -60,22 +55,7 @@ exports.signIn = function() {
             return Promise.reject();
         })
         .then(function() {
-            session.fetchSession()
-            .then(function() {
-                file.readText()
-                .then(function(content) {
-                    var parsedContent = JSON.parse(content);
-                });
-                pool.load()
-                .then(function() {
-                    var pools = pool._array;
-                    pools.forEach(function(i) {
-                        if (parseInt(i.id) === parsedContent.id) {
-                            parsedContent.name = i.name;
-                        };
-                    });
-                });
-            });
+            session.fetchSession();
         })
         .then(function() {
             frameModule.topmost().navigate("views/standings/standings");
